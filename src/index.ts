@@ -56,7 +56,7 @@ export async function main() {
     return 3;
   }
   try {
-    let targetDevice = null;
+    let targetDevice : frida.Device | null = null;
     try {
       let deviceManager = frida.getDeviceManager();
       if (opts.usbDevice) {
@@ -152,7 +152,7 @@ export async function main() {
         if (frontAppProcessList.length === 1) {
           let p = frontAppProcessList[0];
           targetPID = p.pid;
-          packageName = p.parameters.applications? p.parameters.applications[0] : 'com.nothis.app';
+          // packageName = p.parameters.applications? p.parameters.applications[0] : 'com.nothis.app';
         } else {
           console.log(`error, ${frontAppProcessList.length} front app found. `);
           return 1;
@@ -190,7 +190,7 @@ export async function main() {
         });
 
         let pid = parseInt(cpn.sel);
-
+        // packageName = 
         targetPID = pid;
       }
 
@@ -246,8 +246,15 @@ export async function main() {
         Thread.sleep(opts.sleep);
       }
 
+      
+      let getAppName = async ()=>{
+        let currentProcess = await targetDevice!.enumerateProcesses({pids:[targetPID],scope: frida.Scope.Full});
+        let appName = currentProcess[0].parameters.applications ? currentProcess[0].parameters.applications[0] : 'no.this.app';
+        return appName;
+      }
+     
       //设置保存的路径
-      let outputDexPath = opts.outputDexPath || path.join(process.cwd(),packageName);
+      let outputDexPath = opts.outputDexPath || path.join(process.cwd(), await getAppName());
       if (!fs.existsSync(outputDexPath)) {
         fs.mkdirSync(outputDexPath, { recursive: true });
       }

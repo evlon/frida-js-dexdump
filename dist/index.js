@@ -24,7 +24,7 @@ export async function main() {
         .option("-f, --spawn", "use spawn restart app")
         .option("-F, --front-app", "dump front app")
         .option("-o, --output-dex-path <path>", "output dir of the dex file to save, default is ./<package-name>/")
-        .option("-d, --deep-dump", "use deep search to dump dex", false)
+        .option("-d, --deep-search", "use deep search to dump dex", false)
         .option("-s, --sleep-befor_dump", "wait some seconds to dump dex", "5")
         .option("--include-system", "when --spawn enable, use this to get system apps");
     program.parse();
@@ -119,7 +119,7 @@ export async function main() {
                 if (frontAppProcessList.length === 1) {
                     let p = frontAppProcessList[0];
                     targetPID = p.pid;
-                    packageName = p.parameters.applications ? p.parameters.applications[0] : 'com.nothis.app';
+                    // packageName = p.parameters.applications? p.parameters.applications[0] : 'com.nothis.app';
                 }
                 else {
                     console.log(`error, ${frontAppProcessList.length} front app found. `);
@@ -148,6 +148,7 @@ export async function main() {
                     choices: appProcessList.map((d) => `${d.pid}:${d.parameters.applications ? d.parameters.applications[0] : "nop"}-${d.name}`),
                 });
                 let pid = parseInt(cpn.sel);
+                // packageName = 
                 targetPID = pid;
             }
             // console.log(JSON.stringify(appProcessList,null,4));
@@ -188,14 +189,19 @@ export async function main() {
             if (opts.sleep > 0) {
                 Thread.sleep(opts.sleep);
             }
+            let getAppName = async () => {
+                let currentProcess = await targetDevice.enumerateProcesses({ pids: [targetPID], scope: frida.Scope.Full });
+                let appName = currentProcess[0].parameters.applications ? currentProcess[0].parameters.applications[0] : 'no.this.app';
+                return appName;
+            };
             //设置保存的路径
-            let outputDexPath = opts.outputDexPath || path.join(process.cwd(), packageName);
+            let outputDexPath = opts.outputDexPath || path.join(process.cwd(), await getAppName());
             if (!fs.existsSync(outputDexPath)) {
                 fs.mkdirSync(outputDexPath, { recursive: true });
             }
             // begin to dump
             let dumper = new Dumper(agentRpc);
-            await dumper.dump(outputDexPath, opts.deepDump);
+            await dumper.dump(outputDexPath, opts.deepSearch);
         }
         catch (e) {
             console.log(getErrorMessage(e).msg);

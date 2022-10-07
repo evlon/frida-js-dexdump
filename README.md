@@ -12,7 +12,25 @@ It is a frida tool to find and dump dex in memory to support security engineers 
 2. Compatible with all android version(frida supported).
 3. One click installation, without modifying the system, easy to deploy and use.
 
+## Require
+
+1. Node.js  Version > 14.16 , my dev node is 16.13.2
+```
+$ node -v
+v16.13.2
+```
+
+2. Python3 3.10.7
+   
+ ```
+$ python -V
+Python 3.10.7
+
+ ```
+
 ## Installation
+
+
 
 ```
 pip3 install frida frida-tools
@@ -80,6 +98,9 @@ yarn install
 yarn run watch-agent
 yarn run watch
 ```
+
+## 截图
+![screenshot](doc/useage.gif)
 
 ### 参考和致谢
 
