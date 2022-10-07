@@ -1,4 +1,4 @@
-# FRIDA-DEXDump
+# FRIDA-JS-DEXDump
 
 `frida-js-dexdump` is a copy of frida-dexdump writed by ts.
 It is a frida tool to find and dump dex in memory to support security engineers in analyzing malware.
