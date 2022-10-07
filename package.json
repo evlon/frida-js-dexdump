@@ -6,11 +6,11 @@
     "url": "https://github.com/evlon/"
   },
   "homepage": "https://github.com/evlon/frida-js-dexdump",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "cli.js",
   "license": "MIT",
   "type": "module",
-  "bin":"dist/cli.js",
+  "bin": "dist/cli.js",
   "scripts": {
     "build-agent": "frida-compile ./agent/src/index.ts -o ./agent/dist/index.js -c",
     "watch-agent": "frida-compile ./agent/src/index.ts -o ./agent/dist/index.js -w",
