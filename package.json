@@ -1,12 +1,17 @@
 {
   "name": "frida-dumpdex",
-  "version": "1.0.0",
-  "main": "index.js",
+  "author": {
+    "name": "evlon",
+    "email": "evlion@qq.com",
+    "url": "https://github.com/evlon/"
+  },
+  "homepage": "https://github.com/evlon/frida-js-dexdump",
+  "version": "0.2.0",
+  "main": "cli.js",
   "license": "MIT",
   "type": "module",
-  "private": true,
+  "bin":"dist/cli.js",
   "scripts": {
-    "prepare": "gulp run build",
     "build-agent": "frida-compile ./agent/src/index.ts -o ./agent/dist/index.js -c",
     "watch-agent": "frida-compile ./agent/src/index.ts -o ./agent/dist/index.js -w",
     "build": "tsc.cmd -p ./tsconfig.json",

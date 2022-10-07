@@ -5,15 +5,34 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "ts-node-esm",
+            "name": "ts-node-esm-U",
             "type": "node",
             "request": "launch",
             "args": [
-                "${relativeFile}",
+                "src/cli.ts",
+                "-UF",
+                "-o",
+                "./output"
+            ],
+            "runtimeArgs": [
+                "--loader",
+                "ts-node/esm"
+            ],
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector",
+            "internalConsoleOptions": "openOnSessionStart",
+            "console": "externalTerminal"
+        } ,
+        {
+            "name": "ts-node-esm-H",
+            "type": "node",
+            "request": "launch",
+            "args": [
+                "src/cli.ts",
                 "-H",
                 "127.0.0.1:27042",
                 "-o",
-                "/output"
+                "./output"
             ],
             "runtimeArgs": [
                 "--loader",
