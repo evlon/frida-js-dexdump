@@ -33,7 +33,7 @@ export async function main() {
       "-o, --output-dex-path <path>",
       "output dir of the dex file to save, default is ./<package-name>/"
     )
-    .option("-d, --deep-dump", "use deep search to dump dex", false)
+    .option("-d, --deep-search", "use deep search to dump dex", false)
     .option("-s, --sleep-befor_dump", "wait some seconds to dump dex", "5")
     .option(
       "--include-system",
@@ -254,7 +254,7 @@ export async function main() {
 
       // begin to dump
       let dumper = new Dumper(agentRpc);
-      await dumper.dump(outputDexPath, opts.deepDump);
+      await dumper.dump(outputDexPath, opts.deepSearch);
     } catch (e) {
       console.log(getErrorMessage(e).msg);
       return 3;
