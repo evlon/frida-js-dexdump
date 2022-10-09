@@ -144,8 +144,8 @@ function verify_by_maps(dexptr: NativePointer, mapsptr: NativePointer, range_bas
         }
         else if(item_type === 0x0002){
             //type_ids  从文件开头到类型标识符列表的偏移量；如果 type_ids_size == 0（不可否认是一种奇怪的极端情况），则该值为 0。该偏移量（如果为非零值）应该是到 type_ids 区段开头的偏移量。
-            const header_type_ids_size = dexptr.add(0x3C).readUInt();
-            const header_type_ids_offset = dexptr.add(0x3C + 4).readUInt();
+            const header_type_ids_size = dexptr.add(0x40).readUInt();
+            const header_type_ids_offset = dexptr.add(0x40 + 4).readUInt();
             
             //类型标识符列表中的元素数量，最多为 65535
             if(map_item_size > 65535){
@@ -283,7 +283,7 @@ export function searchDex(deepSearch: boolean) {
     Process.enumerateRanges('r--').forEach(function (range: RangeDetails) {
         try {
 
-            //DEX\\n3??0  搜索 64 65 78 0a 30 ?? ?? 00
+            //DEX\n3??\0  搜索 64 65 78 0a 30 ?? ?? 00
             Memory.scanSync(range.base, range.size, "64 65 78 0a 30 ?? ?? 00").forEach(function (match) {
 
                 //跳过系统的

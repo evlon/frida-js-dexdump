@@ -38,6 +38,3 @@ rpc.exports = {
 
 };
 
-console.log(`------------------${new Date()}----------------------`)
-let ranges = searchDex(false);
-console.log(ranges.length)
