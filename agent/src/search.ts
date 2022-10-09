@@ -234,17 +234,21 @@ function verify(dexptr: NativePointer, range: RangeDetails, enable_verify_maps: 
             return false;
         }
 
+        var maps_address = get_maps_address(dexptr, range.base, range_end);
+        if (!maps_address) {
+            return false;
+        }
+
+        var maps_end = get_maps_end(maps_address, range.base, range_end);
+        if (!maps_end) {
+            return false;
+        }
+
+        if (!verify_ids_off(dexptr, range.size)) {
+            return false;
+        }
+
         if (enable_verify_maps) {
-
-            var maps_address = get_maps_address(dexptr, range.base, range_end);
-            if (!maps_address) {
-                return false;
-            }
-
-            var maps_end = get_maps_end(maps_address, range.base, range_end);
-            if (!maps_end) {
-                return false;
-            }
             return verify_by_maps(dexptr, maps_address,range.base, range_end)
         } else {
 
